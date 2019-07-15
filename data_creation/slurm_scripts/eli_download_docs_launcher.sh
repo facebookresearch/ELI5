@@ -1,0 +1,3 @@
+for i in {0..99}; do sbatch --export=SCNUM=$i eli_download_docs.sbatch; done
+
+
