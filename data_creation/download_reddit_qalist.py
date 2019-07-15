@@ -131,7 +131,7 @@ def main():
                         help='starting year')
     parser.add_argument('-em', '--end_month', default=7, type=int, metavar='N',
                         help='end year')
-    parser.add_argument('-sr_l', '--subreddit_list', default='["explainlikeimfive", "askscience", "AskHistorians"]', type=str, #, "AskReddit"]', type=str,
+    parser.add_argument('-sr_l', '--subreddit_list', default='["explainlikeimfive"]', type=str, #also tested for default='["explainlikeimfive", "askscience", "AskHistorians"]'
                         help='subreddit name')
     parser.add_argument('-Q', '--questions_only', action='store_true',
                         help= 'only download submissions')
