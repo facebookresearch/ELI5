@@ -17,32 +17,25 @@ The first line takes about 6 hours on one machine to download the quations, and 
 
 ## Downloading support documents
 
-We provide a list of CommonCrawl IDs for supporting documents for each of the questions (TODO: actually upload). This can be obtained at:
+We provide a list of CommonCrawl IDs for supporting documents for each of the questions. This can be obtained at:
 ```
 cd precomputed
-curl https://dl.fbaipublicfiles.com/eli5qa/eli5_url_cidmap.tar.gz | tar xvzf -
+curl https://dl.fbaipublicfiles.com/eli5qa_explainlikeimfive_ccrawl_ids.json.gz | gunzip > explainlikeimfive_ccrawl_ids.json
 cd ..
 ```
 
-The next step than consists in reading through the CommonCrawl WET files to gather the text of pages which are used as support documents. In order to gather the 100 documents for each QA pair using a SLURM cluster and 72 threads, run:
+The next step than consists in reading through the CommonCrawl WET files to gather the text of pages which are used as support documents. In order to gather the 100 documents for each QA pair using a SLURM cluster and 100 threads, run:
 ```
 cd slurm_scripts
-./eli_download_docs_master.sh
+./eli_download_docs_launcher.sh
 ```
-
-We also provide an equivalent script to only download the documents we actually used after running our heuristic passage selection (cf. paper)
-```
-cd slurm_scripts
-./eli_download_docs_small_master.sh
-```
+This should run in less than 24 hours. Be advised that the result is upwards of 300GB.
 
 ## Finalizing the dataset
 
 All that remains to do now is to map the collected passages to the question-answer pairs and, apply our provided heuristic to make a single support document to select relevant passages
-```
-python make_qda_shelve.py -so
-```
-Unfortunately, this relies on building a shelve file gathering all of the relevant web articles for each QA-pair, which does not support concurrent write and cannot be parallelized easily, so the whole process should take about 24 hours. The results will be located in the processed\_data folder.
+
+TODO: finalize
 
 Congrats, you can now start working on your very own Long-Form Question Answering systems!
 
