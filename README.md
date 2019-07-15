@@ -1,4 +1,4 @@
-<img src="../eli5.png" width="150">
+<img src="eli5.png" width="150">
 
 # Data creation
 
@@ -9,31 +9,11 @@ We provide a suite of scripts to download paired questions and answers from the 
 The first step consists in downloading the Reddit Data drom the files provided at pushshift.io for all months from 07/2011 to 07/2018. This is done by running:
 
 ```
-python download_reddit_qalist.py
+python download_reddit_qalist.py -Q
+python download_reddit_qalist.py -A
 ```
+The first line takes about 6 hours on one machine to download the quations, and the second less than 48 hours for the answers. Pushshift files are automatically removed after they've been processed, so space shouldn't be an issue there. The final product should be 689MB.
 
-The total download takes about up to 72 hours on one machine. We also provide SLURM scripts to run this part in parallel. First, collect the questions:
-```
-cd slurm_scripts
-./eli_download_questions_master.sh
-```
-
-This by default sends 12 threads to a cluster, and should download all of the questions in under two hours (note: Reddit discourages concurrent requests, so getting more threads to work in parallel might take a little more work). They then need to be merged with:
-```
-python download_reddit_qalist.py -M -Q
-rm processed_data/eli5_qalist.json.*
-```
-
-Then, we can similarly parallelize the download of the comments and merge the results with:
-```
-cd slurm_scripts
-./eli_download_answers_master.sh
-cd ..
-python download_reddit_qalist.py -M
-rm processed_data/eli5_qalist.json.*
-```
-
-This part takes about 5 hours using 10 machines.
 
 ## Downloading support documents
 
