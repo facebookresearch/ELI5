@@ -12,7 +12,7 @@ The first step consists in downloading the Reddit Data drom the files provided a
 python download_reddit_qalist.py -Q
 python download_reddit_qalist.py -A
 ```
-The first line takes about 6 hours on one machine to download the quations, and the second less than 48 hours for the answers. Pushshift files are automatically removed after they've been processed, so space shouldn't be an issue there. The final product should be 689MB.
+The first line takes about 6 hours on one machine to download the questions, and the second less than 48 hours for the answers. Pushshift files are automatically removed after they've been processed, so space shouldn't be an issue there. The final product should be 689MB.
 
 
 ## Downloading support documents
