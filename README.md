@@ -20,7 +20,7 @@ The first line takes about 6 hours on one machine to download the quations, and 
 We provide a list of CommonCrawl IDs for supporting documents for each of the questions. This can be obtained at:
 ```
 cd precomputed
-curl https://dl.fbaipublicfiles.com/eli5qa_explainlikeimfive_ccrawl_ids.json.gz | gunzip > explainlikeimfive_ccrawl_ids.json
+curl https://dl.fbaipublicfiles.com/eli5qa/explainlikeimfive_ccrawl_ids.json.gz | gunzip > explainlikeimfive_ccrawl_ids.json
 cd ..
 ```
 
