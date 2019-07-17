@@ -1,0 +1,20 @@
+[
+	{
+		"length": 101, 
+		"question": "ELI5: The controversy surrounding GMO.",
+		"answer": "For a long time, people have been breeding plants and animals to be better for humans-cows that produce more milk or tomatoes that are tastier or more durable. A while ago, scientists figured out a way to do this much more quickly, so they can achieve their goals faster and more efficiently . Some people are afraid of this new way because it is strange and different , and others are concerned because many of the groups doing it are big corporations who are n't necessarily acting in the best interest of everyone else.",
+		"y": 55 
+	},
+	{
+		"length": 169,
+		"question": "Why do some beaches have clear blue water you can see through and others don't?", 
+		"answer": "Stirring up of sediment from the seafloor will render the water unclear. How much sediment will be stirred up at a given beach depends on several factors e.g. ocean currents, the weather (storms will cause more sediment to be stirred up), and the promixity to eustaries (rivers are steadily carrying new sediment into the sea). Another thing that will render the water unclear is unicelluar algae (also known as phytoplankton). The concentration of algae is highly dependent on how nutritious the water is. For example, duck ponds tend to have very green and unclear water because duck poo functions as fertilizer for the algae. In coastal areas, high nutrient levels can for example be caused by excess fertilizer leaked from agricultural fields and carried out to the sea via rivers. I do n't know much about American geography, and can therefore not give a specific answer regarding the mentioned Florida beaches.",
+		"y": 75
+	}, 
+	{
+		"length": 43, 
+		"question": "What is an RSS feed and how do I view one? ELI5", 
+		"answer": "RSS stands for Really Simple Syndication. Think of it as a blog, but in a specialized format. To use RSS you have to have an RSS reader. There are web based ones, desktop-based ones, and some specialized ones for podcasts and the like.",
+		"y": 100
+	}
+]

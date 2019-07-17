@@ -1,0 +1,118 @@
+<head>
+  <meta charset="utf-8">
+
+  <title>ELI5: Long Form QA</title>
+  <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  <script type="text/javascript" src="https://semantic-ui.com/javascript/library/tablesort.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="base.css">
+</head>
+<body>
+  <div class="pusher">
+    <div class="ui vertical masthead center aligned segment">
+      <div class="ui text container">
+        <img class="ui centered large image" src="eli5_logo.png">
+      </div>
+
+    </div>
+
+    <div class="ui container" style="margin-bottom: 3em;">
+      <div class="ui three item secondary pointing menu">
+        <a class="active item">
+          <i class="clipboard outline icon"></i>
+          Dataset
+        </a>
+        <a class="item" onclick="location.href='explore.html'">
+          <i class="chart bar outline icon"></i>
+          Explore
+        </a>
+        <a class="item" onclick="location.href='download.html'">
+          <i class="cloud download icon"></i>
+          Download</a>
+      </div>
+    </div>
+    <div class="ui stackable grid container">
+      <div class="eight wide column">
+        <h2 class="ui center aligned icon sub header">
+          <i class="clipboard icon"></i>
+          The Dataset
+        </h2>
+        <b>ELI5</b> is a dataset for <b>long-form question answering</b>. It contains 270K complex, diverse questions that require explanatory multi-sentence answers. Web search results are used as evidence documents to answer each question. 
+        <div class="ui piled segment">
+          <div class="ui segment">
+            <p><b>Question: </b>How do Jellyfish function without brains or nervous systems?</p>
+          </div>
+          <div class="ui tall stacked segment">
+            <p><b>Supporting Documents: </b>The box jellyfish nervous system is divided into three functional parts namely; rhopalia, conducting nerve ring, and motor nerve net. [...] Jellyfish do not have brains, and most barely have nervous systems. They have primitive nerve cells that help them orient themselves in the water and sense light and touch. [...] While they don’t possess brains, the animals still have neurons that send all sorts of signals throughout their body. ``It is not true that jellyfish have no central nervous systems. They have an unusual nervous system,'' [...] </p>
+          </div>
+          <div class="ui segment">
+            <p><b>Answer: </b>Jellyfish may not have a brain, but they have a rough nervous system and innate behaviours. However, they are very simple creatures. They're invertebrate: creatures without a backbone. Most jellyfish have really short life spans. [...] As their name implies, they are largely composed of basically jelly inside a thin membrane. They're over 95% water.</p>
+          </div>
+
+        </div>
+       <!--  <div class="ui centered card">
+          <div class="ui small basic icon buttons">
+            <button class="ui button" onclick="location.href='https://www.overleaf.com/8446286929ptxqmmyrsjcs'"><i class="file icon"></i></button>
+            <button class="ui button" onclick="location.href='download.html'"><i class="cloud download icon"></i></button>
+          </div>
+        </div> -->
+      </div>
+      <div class="eight wide column">
+        <h2 class="ui center aligned icon sub header">
+          <i class="trophy icon"></i>
+          Leaderboard
+        </h2>
+        <br>
+        <table class="ui very basic table">
+          <thead>
+            <tr>
+              <th rowspan="2" class="center aligned">Model</th>
+              <th colspan="3" class="center aligned">Full ROUGE</th>
+              <th colspan="3" class="center aligned">Fill 20 ROUGE</th>
+            </tr>
+            <tr>
+              <th class="center aligned">1</th>
+              <th class="center aligned">2</th>
+              <th class="center aligned">L</th>
+              <th class="center aligned">1</th>
+              <th class="center aligned">2</th>
+              <th class="center aligned">L</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Seq2Seq Multi-task [Fan et al, 2019]</td>
+              <td>28.9</td>
+              <td>5.4</td>
+              <td>23.1</td>
+              <td>37.2</td>
+              <td>14.6</td>
+              <td>33.0</td>
+            </tr>
+            <tr>
+              <td>Extractive [Fan et al, 2019]</td>
+              <td>23.5</td>
+              <td>3.11</td>
+              <td>17.5</td>
+              <td>--</td>
+              <td>--</td>
+              <td>--</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="ui divider"></div>
+  <div class="ui vertical footer segment">
+      <div class="ui container">
+          <a href="https://research.fb.com/category/facebook-ai-research/">Facebook AI Research</a> | © 2019 | <a href="https://github.com/facebookresearch/ELI5">ELI5 on Github</a>
+      </div>
+  </div>
+</body>
+

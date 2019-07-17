@@ -1,0 +1,368 @@
+<head>
+  <meta charset="utf-8">
+
+  <title>ELI5: Long Form QA</title>
+  <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  <script type="text/javascript" src="https://semantic-ui.com/javascript/library/tablesort.js"></script>
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.9.1/d3-tip.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="base.css">
+  <style>
+  @import url(//fonts.googleapis.com/css?family=Open+Sans:400,700);
+
+  #treemap {
+    background: #fff;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+
+  .title {
+      font-weight: bold;
+      font-size: 12px;
+      text-align: center;
+      margin-top: 6px;
+      margin-bottom: 6px;
+  }
+  text {
+    pointer-events: none;
+    font-size: 10px;
+  }
+
+  .grandparent text {
+    font-weight: bold;
+  }
+
+  rect {
+    fill: none;
+    stroke: #fff;
+  }
+
+  g.children {
+    pointer-events: bounding-box;
+  }
+
+  rect.parent,
+  .grandparent rect {
+    stroke-width: 2px;
+  }
+
+  rect.parent {
+      pointer-events: none;
+  }
+
+  .grandparent rect {
+    fill: rgba(255, 127, 0, 0.8);
+  }
+
+  .grandparent:hover rect {
+    fill: rgba(255, 127, 0, 1.0);
+  }
+
+  rect.parent,
+  .grandparent rect {
+    cursor: pointer;
+  }
+
+  rect.parent {
+    fill: #bbb;
+    fill-opacity: .5;
+  }
+
+  .children:hover rect.child {
+    fill: rgba(127, 127, 255, 0.9);
+  }
+
+  svg {
+    font: 14px 'Open Sans';
+  }
+
+  .axis path,
+  .axis line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  .axis text {
+    fill: #000;
+  }
+
+  .axis .tick line {
+    stroke: rgba(0, 0, 0, 0.1);
+  }
+
+  .median-line,
+  .legend .median-line {
+    fill: none;
+    stroke: rgba(127, 127, 255, 0.8);
+    stroke-width: 2.5;
+  }
+
+  .marker.client .marker-bg,
+  .marker.client path {
+    fill: rgba(255, 127, 0, 0.8);
+    stroke: rgba(255, 127, 0, 0.8);
+    stroke-width: 3;
+  }
+
+  .marker.client .marker-bg:hover,
+  .marker.client .marker-bg:hover ~ path {
+    fill: rgba(0, 153, 51, 0.8);
+    stroke: rgba(0, 153, 51, 0.8);
+    stroke-width: 3;
+  }
+
+  .marker.server .marker-bg,
+  .marker.server path {
+    fill: rgba(0, 153, 51, 0.8);
+    stroke: rgba(0, 153, 51, 0.8);
+    stroke-width: 3;
+  }
+
+  .marker path {
+    fill: none;
+  }
+
+  .marker text {
+    fill: #fff;
+    font-weight: bold;
+  }
+
+  .marker text {
+    text-anchor: middle;
+  }
+
+  </style>
+</head>
+<body>
+  <div class="pusher">
+    <div class="ui vertical masthead center aligned segment">
+      <div class="ui text container">
+        <img class="ui centered large image" src="eli5_logo.png">
+      </div>
+    </div>
+
+    <div class="ui container" style="margin-bottom: 3em;">
+      <div class="ui three item secondary pointing menu">
+        <a class="item" onclick="location.href='index.html'">
+          <i class="clipboard outline icon"></i>
+          Dataset
+        </a>
+        <a class="active item" onclick="location.href='explore.html'">
+          <i class="chart bar outline icon"></i>
+          Explore
+        </a>
+        <a class="item" onclick="location.href='download.html'">
+          <i class="cloud download icon"></i>
+          Download</a>
+      </div>
+    </div>
+
+    <div class="ui stackable two column grid container" style="margin-bottom: 3em;">
+      <!-- <div class="stretched row"> -->
+        <div class="center aligned column">
+
+          <div class="ui basic segment">
+            <h4 class="ui header">What kinds of questions are asked in ELI5?</h4>
+            Click on a question word to see the next words, and the orange bar to go back.
+            <br><br>
+            <div id="treemap"></div>
+          </div>
+          <div class="ui basic segment">
+            <h4 class="ui header">Distribution of Answer Lengths</h4>
+            Click on an orange circle to see an example.
+            <div id="answergraph" class="ui basic segment">
+            </div>
+          </div>
+        </div>
+
+        <div class="center aligned column">
+          <div class="ui basic segment">
+            <h3 class="ui header">View Example Generations</h3>
+
+            <div class="ui floating labeled icon dropdown button" id="question_dropdown">
+              <i class="question icon"></i>
+              <span class="text">Choose a Question</span>
+              <div class="menu">
+                <div class="item" data-value="color_question">
+                  <i class="eye icon"></i>
+                  How can different animals perceive different colors?
+                </div>
+                <div class="item" data-value="flute_question">
+                  <i class="music icon"></i>
+                  Why are flutes classified as woodwinds when most of them are made out of metal?
+                </div>
+                <div class="item" data-value="art_question">
+                  <i class="paint brush icon"></i>
+                  How can we set a date to the beginning or end of an artistic period? Doesn't the change happen gradually? 
+                </div>
+                <div class="item" data-value="coffee_question">
+                  <i class="coffee icon"></i>
+                  Why do adults like drinking coffee when it tastes so bad?
+                </div>
+                <div class="item" data-value="wine_question">
+                  <i class="glass martini icon"></i>
+                  What happens when wine ages? How does it make the wine taste better?
+                </div>
+                <div class="item" data-value="vitamin_question">
+                  <i class="medkit icon"></i>
+                  What exactly are vitamins?
+                </div>
+                <div class="item" data-value="bird_question">
+                  <i class="earlybirds icon"></i>
+                  Why were the main predators in New Zealand large birds, compared to other places in the world?
+                </div>
+
+                <div class="item" data-value="virus_question">
+                  <i class="dna icon"></i>
+                  What's the difference between viruses and bacteria?
+                </div>
+                <div class="item" data-value="grass_question">
+                  <i class="tree icon"></i>
+                  If an animal is an herbivore (only eats plants), where does it get the protein that it needs to survive if it only eats grass?
+                </div>
+                <div class="item" data-value="chocolate_question">
+                  <i class="heart icon"></i>
+                  How do you make chocolate?
+                </div>
+
+              </div>
+            </div>
+            
+            <br><br>
+
+            <div class="ui multiple dropdown" id="filter_dropdown">
+              <input type="hidden" name="filters">
+
+              <i class="filter icon"></i>
+              <span class="text">Filter Models</span>
+              <div class="menu">
+                <div class="ui icon search input">
+                  <i class="search icon"></i>
+                  <input type="text" placeholder="Select Models...">
+                </div>
+                <div class="scrolling menu">
+                  <div class="item" data-value="human_answer">
+                    <!-- <div class="ui empty black circular label"></div> -->
+                    Human Answer
+                  </div>
+                  <div class="item" data-value="generative_short">
+                    <!-- <div class="ui empty blue circular label"></div> -->
+                    Generative Short
+                  </div>
+                  <div class="item" data-value="extractive_long">
+                    <!-- <div class="ui empty green circular label"></div> -->
+                    Extractive Long
+                  </div>
+                  <div class="item" data-value="generative_long">
+                    <!-- <div class="ui empty blue circular label"></div> -->
+                    Generative Long
+                  </div>
+                  <div class="item" data-value="extractive_short">
+                    <!-- <div class="ui empty green circular label"></div> -->
+                    Extractive Short
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="ui basic segment cards">
+            <div class="ui fluid card" id="human_answer_div">
+              <div class="content">
+                <div class="h2">
+                  <b>Human Answer</b>
+                </div>
+                <div class="left aligned description example_answer" id="human_answer_box">
+                </div>
+              </div>
+            </div>
+            <div class="ui fluid card">
+              <div class="content">
+                <div class="h2">
+                  <b>Generative Short</b>
+                </div>
+                <div class="left aligned description example_answer" id="generative_short_box">
+                </div>
+              </div>
+            </div>
+            <div class="ui fluid card">
+              <div class="content">
+                <div class="h2">
+                  <b>Extractive Long</b>
+                </div>
+                <div class="left aligned description example_answer" id="extractive_long_box">
+               </div>
+              </div>
+            </div>
+            <div class="ui fluid card">
+              <div class="content">
+                <div class="h2">
+                  <b>Generative Long</b>
+                </div>
+                <div class="left aligned description example_answer" id="generative_long_box">
+                </div>
+              </div>
+            </div>
+            <div class="ui fluid card">
+              <div class="content">
+                <div class="h2">
+                  <b>Extractive Short</b>
+                </div>
+                <div class="left aligned description example_answer" id="extractive_short_box">
+               </div>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <br>
+  <div class="ui divider"></div>
+  <div class="ui vertical footer segment">
+      <div class="ui container">
+          <a href="https://research.fb.com/category/facebook-ai-research/">Facebook AI Research</a> | © 2019 | <a href="https://github.com/facebookresearch/ELI5">ELI5 on Github</a>
+      </div>
+  </div>
+  <script>
+    function populateContent(data) {
+      current_selected_options = $('#filter_dropdown').dropdown('get value');
+      current_selected_question = $('#question_dropdown').dropdown('get value');
+      options = current_selected_options.split(",")
+
+      $('.example_answer').text("");
+      $('.example_answer').hide();
+      options.forEach(option => {
+        $('#' + option + '_box').text(data[current_selected_question][option]);
+        $('#' + option + '_box').show();
+      });
+
+    }
+
+    $(document).ready(function(){
+      $.getJSON( "example_answers.json", function( data ) {
+        console.log(data);
+        $('.ui.dropdown').dropdown();
+        $('#filter_dropdown').dropdown('set selected', ["human_answer", "extractive_long", "generative_short"]);
+        $('#question_dropdown').dropdown('set selected', "color_question");
+        var populateData = function() {
+          populateContent(data);
+        }
+        populateData();
+
+        $('#filter_dropdown').dropdown('setting', 'onChange', populateData);
+        $('#question_dropdown').dropdown('setting', 'onChange', populateData);
+      });
+
+
+
+    });
+
+  </script>
+  <script src="treemap.js"></script>
+  <script src="answer_graph.js"></script>
+</body>
+

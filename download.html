@@ -1,0 +1,89 @@
+<head>
+  <meta charset="utf-8">
+
+  <title>ELI5: Long Form QA</title>
+  <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  <script type="text/javascript" src="https://semantic-ui.com/javascript/library/tablesort.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="base.css">
+</head>
+<body>
+  <div class="pusher">
+    <div class="ui vertical masthead center aligned segment">
+      <div class="ui text container">
+        <img class="ui centered large image" src="eli5_logo.png">
+      </div>
+    </div>
+
+    <div class="ui container" style="margin-bottom: 3em;">
+      <div class="ui three item secondary pointing menu">
+        <a class="item" onclick="location.href='index.html'"">
+          <i class="clipboard outline icon"></i>
+          Dataset
+        </a>
+        <a class="item" onclick="location.href='explore.html'">
+          <i class="chart bar outline icon"></i>
+          Explore
+        </a>
+        <a class="active item" onclick="location.href='download.html'">
+          <i class="cloud download icon"></i>
+          Download</a>
+      </div>
+    </div>
+
+    <div class="ui stackable grid container" style="margin-bottom: 3em;">
+      <div class="six wide column center aligned">
+       <h3 class="ui header">Construct the Dataset</h3>
+          We provide <a href="https://github.com/facebookresearch/ELI5">scripts</a> to recreate the dataset. Please follow the provided instructions in the README.
+      </div>
+      <div class="four wide column center aligned">
+       <h3 class="ui header">Evaluation</h3>
+          We provide a <b>ROUGE</b> evaluation <a href="https://github.com/facebookresearch/ELI5">script</a>. We use F1 ROUGE to evaluate the quality of the full generated answer and the final 20% of the answer. 
+    </div>
+        <div class="six wide column center aligned">
+          <h3 class="ui header">Pretrained Models</h3>
+            <div class="ui cards">
+              <div class="ui centered card">
+                <div class="content">
+                  <div class="h2">
+                    <b>Seq2Seq Multi-task</b>
+                  </div>
+                  <div class="meta">
+                    Abstractive
+                  </div>
+                  <!-- <div class="description">
+                    Pretrained sequence-to-sequence model to abstractively generate answers. 
+                  </div> -->
+                </div>
+              </div>
+              <div class="ui centered card">
+                <div class="content">
+                  <div class="h2">
+                    <b>Multi-Sentence BidAF</b>
+                  </div>
+                  <div class="meta">
+                    Extractive 
+                  </div>
+                <!--   <div class="description">
+                    Pretrained model that selects sentences to extractively generate answers. 
+                  </div> -->
+                </div>
+              </div>
+          </div>
+        </div>
+    </div>
+
+  </div>
+  <br>
+  <div class="ui divider"></div>
+  <div class="ui vertical footer segment">
+      <div class="ui container">
+          <a href="https://research.fb.com/category/facebook-ai-research/">Facebook AI Research</a> | © 2019 | <a href="https://github.com/facebookresearch/ELI5">ELI5 on Github</a>
+      </div>
+  </div>
+</body>
+

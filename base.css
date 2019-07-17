@@ -1,0 +1,92 @@
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    padding-bottom: 55%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+
+.masthead.segment {
+  min-height: 210px;
+  padding: 1em 0em;
+  background-image: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 1)),
+    url(option3.jpg) !important;
+  background-size:cover !important;
+  border: none;
+}
+.masthead .logo.item img {
+  margin-right: 1em;
+}
+.masthead .ui.menu .ui.button {
+  margin-left: 0.5em;
+}
+.masthead h1.ui.header {
+  margin-top: 0.5em;
+  margin-bottom: 0em;
+  font-size: 4em;
+  font-weight: normal;
+  font-family: 'Abel', 'Lato', sans-serif;
+}
+.masthead h2 {
+  font-size: 1.7em;
+  font-weight: normal;
+  font-family: 'Abel', 'Lato', sans-serif;
+}
+
+.ui.header .custom.icon {
+  font-size: 1em !important;
+  vertical-align: inherit !important;
+}
+
+/*tooltip styles*/
+
+/*these styles come from: https://github.com/Caged/d3-tip*/
+.d3-tip {
+  z-index: 101;
+  line-height: 1;
+  padding: 5px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border-radius: 1px;
+  text-align: left;
+  pointer-events: none;
+}
+
+/* Northward tooltips */
+.d3-tip.n:after {
+  /*content: "\25BC";*/
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+  text-align: center;
+}
+
+/* Southward tooltips */
+.d3-tip.s:after {
+  /*content: "\25B2";*/
+  margin: 0 0 1px 0;
+  top: -8px;
+  left: 0;
+  text-align: center;
+}
+
+/* Eastward tooltips */
+.d3-tip.e:after {
+  margin: -4px 0 0 0;
+  top: 50%;
+  left: -8px;
+}
+
+/* Westward tooltips */
+.d3-tip.w:after {
+  margin: -4px 0 0 -1px;
+  top: 50%;
+  left: 100%;
+}
