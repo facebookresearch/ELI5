@@ -21,7 +21,7 @@ def main():
                         help='commoncrawl slice number [0, ..., 71520 / args.slsize]')
     parser.add_argument('-wf', '--wet_urls', default='pre_computed/wet.paths', type=str,
                         help='path to file containing WET file URLs')
-    parser.add_argument('-sr_l', '--subreddit_names', default='["explainlikeimfive", "askscience", "AskHistorians"]', type=str,
+    parser.add_argument('-sr_l', '--subreddit_names', default='["explainlikeimfive"]', type=str,
                         help='subreddit names')
     parser.add_argument('-nu', '--n_urls', default=100, type=int, metavar='N',
                         help='number of support documents to gather for each example')

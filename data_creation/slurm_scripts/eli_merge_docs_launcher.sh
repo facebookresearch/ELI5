@@ -1,6 +1,6 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 
-for nm in 'explainlikeimfive' 'AskHistorians' 'askscience'
+for nm in 'explainlikeimfive'
 do
     for c in {0..9}
     do

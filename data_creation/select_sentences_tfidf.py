@@ -1,5 +1,6 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
 
+import argparse
 import json
 import sys
 
@@ -56,24 +57,31 @@ def make_example(qa_dct, docs_list, word_freqs, n_sents=100, n_context=3):
             'answer'  : answer}
 
 
-if __name__ == '__main__':
-    reddit      = sys.argv[1]
-    n_slice     = int(sys.argv[2])
-    n_sents     = int(sys.argv[3])
-    n_context   = int(sys.argv[4])
+def main():
+    parser  = argparse.ArgumentParser(description='Gather into train, valid and test')
+    parser.add_argument('-sid', '--slice_id', default=0, type=int, metavar='N',
+                        help='slice to process')
+    parser.add_argument('-ns', '--num_selected', default=15, type=int, metavar='N',
+                        help='number of selected passages')
+    parser.add_argument('-nc', '--num_context', default=3, type=int, metavar='N',
+                        help='number of sentences per passage')
+    parser.add_argument('-sr_n', '--subreddit_name', default='explainlikeimfive', type=str,
+                        help='subreddit name')
+    args        = parser.parse_args()
+    reddit      = args.subreddit_name
+    n_slice     = args.slice_id
+    n_sents     = args.num_selected
+    n_context   = args.num_context
     if isfile("processed_data/collected_docs/%s/slice_%d.json" % (reddit, n_slice)):
         print("loading data", reddit, n_slice)
         qa_data     = dict(json.load(open("processed_data/%s_qalist.json" % (reddit,))))
         docs_slice  = json.load(open("processed_data/collected_docs/%s/slice_%d.json" % (reddit, n_slice)))
         word_counts = json.load(open("pre_computed/%s_unigram_counts.json" % (reddit,)))
         qt_freqs    = dict(word_counts['question_title'])
-        qt_max      = max(qt_freqs.values())
-        qs_freqs    = dict(word_counts['question_text'])
-        qs_max      = max(qs_freqs.values())
+        qt_sum      = sum(qt_freqs.values())
         d_freqs     = dict(word_counts['document'])
-        d_max       = max(d_freqs.values())
-        word_freqs  = {'title': (qt_freqs, qt_max),
-                       'text' : (qs_freqs, qs_max),
+        d_sum       = sum(d_freqs.values())
+        word_freqs  = {'title': (qt_freqs, qt_sum),
                        'doc'  : (d_freqs, d_max)}
         print("loaded data")
         processed   = []
@@ -84,3 +92,7 @@ if __name__ == '__main__':
             if i % 10 == 0:
                 print(i, len(processed), time() - st_time)
         json.dump(processed, open('processed_data/%s_selected_slice_%d_ns_%d_%d.json' % (reddit, n_slice, n_sents, n_context), 'w'))
+
+
+if __name__ == '__main__':
+    main()

@@ -122,7 +122,6 @@ def post_process(reddit_dct, name=''):
     return reddit_dct
 
 
-
 def main():
     parser  = argparse.ArgumentParser(description='Subreddit QA pair downloader')
     parser.add_argument('-sy', '--start_year', default=2011, type=int, metavar='N',
@@ -133,7 +132,7 @@ def main():
                         help='starting year')
     parser.add_argument('-em', '--end_month', default=7, type=int, metavar='N',
                         help='end year')
-    parser.add_argument('-sr_l', '--subreddit_list', default='["explainlikeimfive"]', type=str, #also tested for default='["explainlikeimfive", "askscience", "AskHistorians"]'
+    parser.add_argument('-sr_l', '--subreddit_list', default='["explainlikeimfive"]', type=str,
                         help='subreddit name')
     parser.add_argument('-Q', '--questions_only', action='store_true',
                         help= 'only download submissions')
