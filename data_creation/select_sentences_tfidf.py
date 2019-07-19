@@ -82,7 +82,7 @@ def main():
         d_freqs     = dict(word_counts['document'])
         d_sum       = sum(d_freqs.values())
         word_freqs  = {'title': (qt_freqs, qt_sum),
-                       'doc'  : (d_freqs, d_max)}
+                       'doc'  : (d_freqs, d_sum)}
         print("loaded data")
         processed   = []
         st_time = time()

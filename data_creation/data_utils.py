@@ -76,12 +76,32 @@ def sentence_split(st, max_len=120, max_sen=-1):
     return [' '.join(s.split()) for s in res if len(s.strip()) > 0] # and len(s.split()) > 1]
 
 # pre-compute a normalized sparse tfidf vector
-def tf_idf_vec(sentence, vocounts, totcounts):
+def tf_idf_vec_uni(sentence, vocounts, totcounts):
     sen_tab = sentence.lower().split()
     uni_dic = {}
     for i, w in enumerate(sen_tab):
         if w in vocounts:
             uni_dic[w] = -math.log(float(vocounts.get(w, 1.)) / totcounts)
+    # normalize
+    uni_norm = math.sqrt(sum([x * x for x in uni_dic.values()]))
+    if uni_norm > 0:
+        for w in uni_dic:
+            uni_dic[w] /= uni_norm
+    return uni_dic
+
+def tf_idf_vec(sentence, vocounts, totcounts):
+    sen_tab = sentence.lower().split()
+    uni_dic = {}
+    for i, w in enumerate(sen_tab):
+        uni_dic[w] = -math.log(float(vocounts.get(w, 1.)) / totcounts)
+    for i in range(len(sen_tab)):
+        a   = sen_tab[i]
+        if i + 1 < len(sen_tab):
+            b   = sen_tab[i + 1]
+            uni_dic[a + ' ' + b] = uni_dic[a] + uni_dic[b]
+        if i + 2 < len(sen_tab):
+            b   = sen_tab[i + 2]
+            uni_dic[a + ' ' + b] = uni_dic[a] + uni_dic[b]
     # normalize
     uni_norm = math.sqrt(sum([x * x for x in uni_dic.values()]))
     if uni_norm > 0:
