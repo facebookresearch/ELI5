@@ -10,7 +10,7 @@ We provide a suite of scripts to download paired questions and answers from the 
 
 ## Downloading the Reddit Data
 
-The first step consists in downloading the Reddit Data drom the files provided at pushshift.io for all months from 07/2011 to 07/2018. This is done by running:
+The first step consists in downloading the Reddit Data from the files provided at pushshift.io for all months from 07/2011 to 07/2018. This is done by running:
 
 ```
 python download_reddit_qalist.py -Q
@@ -22,7 +22,7 @@ The first line takes about 6 hours on one machine to download the questions, and
 
 We provide a list of CommonCrawl IDs for supporting documents for each of the questions. This can be obtained at:
 ```
-cd precomputed
+cd pre_computed
 wget https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2018-34/wet.paths.gz
 gunzip wet.paths.gz
 wget https://dl.fbaipublicfiles.com/eli5qa/explainlikeimfive_ccrawl_ids.json.gz
