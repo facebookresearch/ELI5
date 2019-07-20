@@ -141,4 +141,8 @@ Then, apply the BPE:
 subword-nmt apply-bpe -c model_code/bpe_codes.txt < $OUTPUT_DATA_FILE > $OUTPUT_DATA_FILE_BPE
 ```
 
-Now, you are ready to forward the model on your BPE'd data.
+Now, you are ready to forward the model on your BPE'd data. You can generate from the model using Fairseq-py ``generate.py`` or ``interactive.py`` commands.
+
+## Issues running the modeling scripts?
+
+Check out the file ``test_model_code_scripts.sh`` which runs all of the model scripts we include. The sample input/output of these scripts is included in the folder ``testing_files`` for your reference. If you are having trouble, please take a look at these sample files we used for testing to make sure you have the correct input format.
