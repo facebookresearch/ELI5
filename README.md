@@ -146,3 +146,16 @@ Now, you are ready to forward the model on your BPE'd data. You can generate fro
 ## Issues running the modeling scripts?
 
 Check out the file ``test_model_code_scripts.sh`` which runs all of the model scripts we include. The sample input/output of these scripts is included in the folder ``testing_files`` for your reference. If you are having trouble, please take a look at these sample files we used for testing to make sure you have the correct input format.
+
+
+# Citation
+
+Please cite as:
+```bibtex
+@inproceedings{fan2019eli5,
+  title = {ELI5: Long Form Question Answering},
+  author = {Angela Fan and Yacine Jernite and Ethan Perez and David Grangier and Jason Weston and Michael Auli},
+  booktitle = {Proceedings of ACL 2019},
+  year = {2019},
+}
+```
