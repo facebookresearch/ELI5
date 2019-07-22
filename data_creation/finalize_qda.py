@@ -7,10 +7,6 @@ import sys
 from glob import glob
 from os.path import join as pjoin
 
-name    = sys.argv[1]
-n_sel   = int(sys.argv[2])
-n_cont  = int(sys.argv[3])
-
 def main():
     parser  = argparse.ArgumentParser(description='Gather into train, valid and test')
     parser.add_argument('-ns', '--num_selected', default=15, type=int, metavar='N',
@@ -30,7 +26,7 @@ def main():
         qda_dict    = dict([(dct['id'], dct) for dct in qda_list])
         for spl in ['train', 'valid', 'test']:
             split_list  = [qda_dict[k] for k in data_split[spl] if k in qda_dict]
-            json.dump(split_list, open('processed_data/%s_%s.json' % (name, spl), 'w'))
+            json.dump(split_list, open('processed_data/selected/%s_%s.json' % (name, spl), 'w'))
 
 
 if __name__ == '__main__':

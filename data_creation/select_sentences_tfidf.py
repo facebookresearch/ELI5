@@ -11,7 +11,7 @@ from data_utils import *
 def select_pars(qa_dct, docs_list, word_freqs, n_sents=100, n_context=3):
     question    = qa_dct['title'][0]
     split_docs  = [sentence_split(doc['text'][0], max_len=64) for doc in docs_list]
-    q_ti_dct    = tf_idf_vec(question[0],
+    q_ti_dct    = tf_idf_vec(question,
                              word_freqs['title'][0],
                              word_freqs['title'][1])
     split_docs_pre  = [(i, j, sen, tf_idf_vec(sen,
@@ -30,7 +30,7 @@ def select_pars(qa_dct, docs_list, word_freqs, n_sents=100, n_context=3):
             par_ids     += [this_par]
             this_par    = []
             for k in range(-n_context, n_context+1):
-                if j+k > 0 and j+k < len(split_docs[i]) - 1:
+                if j+k >= 0 and j+k < len(split_docs[i]):
                     this_par    += [(i, j+k)]
                     last_seen   = (i, j+k)
         else:
@@ -38,7 +38,7 @@ def select_pars(qa_dct, docs_list, word_freqs, n_sents=100, n_context=3):
                 par_ids     += [this_par]
                 this_par    = []
             for k in range(-n_context, n_context+1):
-                if j+k > last_seen[1] and j+k > 0 and j+k < len(split_docs[i]) - 1:
+                if j+k > last_seen[1] and j+k >= 0 and j+k < len(split_docs[i]):
                     this_par    += [(i, j+k)]
                     last_seen   = (i, j+k)
     par_ids     = par_ids[1:] + [this_par]
