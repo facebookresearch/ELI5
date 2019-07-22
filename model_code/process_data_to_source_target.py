@@ -79,7 +79,7 @@ def form_multitask(questions, documents, answers):
         source.append("<lm_qda>")
         target.append("<startQuestion> " + question + " " + documents[i] + " <startAnswer> " + answers[i])
         source.append("<lm_qd>")
-        target.append("<startQuestion> " + question + documents[i])
+        target.append("<startQuestion> " + question + " " + documents[i])
         source.append("<lm_a>")
         target.append(answers[i])
         source.append("<lm_q>")
@@ -89,7 +89,7 @@ def form_multitask(questions, documents, answers):
         # seq2seq tasks
         source.append("<s2s_q_da> <startQuestion> " + question)
         target.append(documents[i] + " <startAnswer> " + answers[i])
-        source.append("<s2s_qd_a> <startQuestion> " + question + documents[i])
+        source.append("<s2s_qd_a> <startQuestion> " + question + " " + documents[i])
         target.append(answers[i])
         source.append("<s2s_q_a> <startQuestion> " + question)
         target.append(answers[i])
