@@ -219,13 +219,14 @@ def main():
                 fo = open(out_file_name, "w")
                 json.dump([(eli_k, eli_dct) for eli_k, eli_dct in qa_dict[name].items()], fo)
                 fo.close()
-    for name, out_file_name in output_files.items():
-        print('post-processing', name)
-        qa_dct_list = [(k, post_process(rdct, name)) for k, rdct in qa_dict[name].items() if 'comments' in rdct]
-        qa_dct_list = [x for x in qa_dct_list if len(x[1]['comments']) > 0 and name in x[1]['url']]
-        fo = open(out_file_name, "w")
-        json.dump(qa_dct_list, fo)
-        fo.close()
+    if not args.questions_only:
+        for name, out_file_name in output_files.items():
+            print('post-processing', name)
+            qa_dct_list = [(k, post_process(rdct, name)) for k, rdct in qa_dict[name].items() if 'comments' in rdct]
+            qa_dct_list = [x for x in qa_dct_list if len(x[1]['comments']) > 0 and name in x[1]['url']]
+            fo = open(out_file_name, "w")
+            json.dump(qa_dct_list, fo)
+            fo.close()
 
 
 if __name__ == '__main__':
