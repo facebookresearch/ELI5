@@ -1,4 +1,5 @@
 # Copyright (c) Facebook, Inc. and its affiliates. All Rights Reserved
+# Note: this script assumes you have already created the dataset following the data creation scripts. 
 
 python process_data_to_source_target.py --input testing_files --output testing_files
 
