@@ -122,7 +122,7 @@ HYPOTHESES=model_hypotheses.txt
 REFERENCES=true_references.txt
 python compute_rouge.py --hypotheses $HYPOTHESES --references $REFERENCES
 ```
-The min and max length of generation were tuned. For partial fill ROUGE, we evaluated fixed length generation (as model generated answers are usually tuned to be a lot longer than human written answers). We evaluated generation of 27 words (134 average answer length * 0.2). 
+The min and max length of generation were tuned. For partial fill ROUGE, we evaluated fixed length generation (as model generated answers are usually tuned to be a lot longer than human written answers) based on the validation set. 
 
 ## How to use the Multi-task Pretrained Model
 We provide a pretrained model, which you can download here:
