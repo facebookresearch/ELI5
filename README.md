@@ -27,6 +27,7 @@ wget https://commoncrawl.s3.amazonaws.com/crawl-data/CC-MAIN-2018-34/wet.paths.g
 gunzip wet.paths.gz
 wget https://dl.fbaipublicfiles.com/eli5qa/explainlikeimfive_ccrawl_ids.json.gz
 gunzip explainlikeimfive_ccrawl_ids.json.gz
+wget https://dl.fbaipublicfiles.com/eli5qa/explainlikeimfive_unigram_counts.json
 cd ..
 ```
 
