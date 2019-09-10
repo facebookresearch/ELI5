@@ -18,17 +18,9 @@ if ca == 'finalize':
             docs        = docs[3000:]
             num_slice   += 1
 else:
-    if ca == '9':
-        c_l = ['9', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p']
-    elif ca == '0':
-        c_l = ['q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
-    else:
-        c_l = [ca]
-    merged  = []
-    for c in c_l:
-        d_name	= pjoin('processed_data/collected_docs', name, c)
-        if isdir(d_name):
-            merged  += merge_support_docs(d_name)
+    d_name	= pjoin('processed_data/collected_docs', name, ca)
+    if isdir(d_name):
+        merged  = merge_support_docs(d_name)
     if len(merged) > 0:
         json.dump(merged, open(pjoin('processed_data/collected_docs', name, ca) + '.json', 'w'))
 

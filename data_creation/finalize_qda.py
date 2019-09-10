@@ -11,7 +11,7 @@ def main():
     parser  = argparse.ArgumentParser(description='Gather into train, valid and test')
     parser.add_argument('-ns', '--num_selected', default=15, type=int, metavar='N',
                         help='number of selected passages')
-    parser.add_argument('-nc', '--num_context', default=3, type=int, metavar='N',
+    parser.add_argument('-nc', '--num_context', default=1, type=int, metavar='N',
                         help='number of sentences per passage')
     parser.add_argument('-sr_l', '--subreddit_list', default='["explainlikeimfive"]', type=str,
                         help='subreddit name')
@@ -21,7 +21,7 @@ def main():
     for name in json.loads(args.subreddit_list):
         data_split  = json.load(open('pre_computed/%s_split_keys.json' % (name,)))
         qda_list    = []
-        for f_name in glob('processed_data/%s_selected_slice_*_ns_%d_%d.json' % (name, n_sel, n_cont)):
+        for f_name in glob('processed_data/selected/slices/%s_selected_slice_*_ns_%d_%d.json' % (name, n_sel, n_cont)):
             qda_list    += json.load(open(f_name))
         qda_dict    = dict([(dct['id'], dct) for dct in qda_list])
         for spl in ['train', 'valid', 'test']:
