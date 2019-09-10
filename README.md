@@ -8,6 +8,10 @@
 
 We provide a suite of scripts to download paired questions and answers from the ELI5 subreddit along with supporting documents from the CommonCrawl
 
+### FAQ: can you provide the processed data?
+
+No, we are not allowed to host processed Reddit or CommonCrawl data. While we are aware that it would make life a little easier, making your own version of the dataset following the instructions here if you have access to a SLURM cluster. We're also happy to work with you if your cluster works on another operating system. Unfortun the creation process involves downloading and filtering a full CommonCrawl dump, so it is unlikely to be manageable on a single machine.
+
 ## Downloading the Reddit Data
 
 The first step consists in downloading the Reddit Data from the files provided at pushshift.io for all months from 07/2011 to 07/2018. This is done by running:
@@ -36,12 +40,27 @@ The next step than consists in reading through the CommonCrawl WET files to gath
 cd slurm_scripts
 ./eli_download_docs_launcher.sh
 ```
-This should run in less than 24 hours. Be advised that the result is upwards of 100GB. Then, simply merge the slices from all the threads with:
+This should run in less than 24 hours. Be advised that the result is upwards of 100GB.
+
+When you have downloaded the selected pages from all of the CommonCrawl slices, simply merge the slices from all the threads with:
 ```
 ./eli_merge_docs_launcher.sh
 cd ..
 python merge_support_docs.py explainlikeimfive finalize
 ```
+
+### FAQ: my SLURM cluster is not very stable and some of the threads are interrupted. Do I need to re-run everything?
+
+To check whether all slices are finished, simply look at the collocted\_docs/tmp/counts\_\*.json files. All the files corresponding to complete slices should only have the string *finished*, so for example:
+```
+ELI5/data_creation/processed_data$ grep 0 collected_docs/tmp/counts_*
+collected_docs/tmp/counts_18.json:13150
+collected_docs/tmp/counts_23.json:16800
+collected_docs/tmp/counts_36.json:26250
+collected_docs/tmp/counts_79.json:57100
+collected_docs/tmp/counts_90.json:64750
+```
+tells you that threads 18, 23, 36, 79, and 90 is incomplete. Just rerun download\_support\_docs.py for these indices and the code will start again from the last downloaded chunk for that slice.
 
 ## Finalizing the dataset
 
