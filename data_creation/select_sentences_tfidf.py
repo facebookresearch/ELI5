@@ -2,6 +2,7 @@
 
 import argparse
 import json
+import os
 import sys
 
 from time import time
@@ -72,10 +73,10 @@ def main():
     n_slice     = args.slice_id
     n_sents     = args.num_selected
     n_context   = args.num_context
-    if isfile("processed_data/collected_docs/%s/slice_%d.json" % (reddit, n_slice)):
+    if isfile("processed_data/collected_docs/%s/slices/slice_%d.json" % (reddit, n_slice)):
         print("loading data", reddit, n_slice)
         qa_data     = dict(json.load(open("processed_data/%s_qalist.json" % (reddit,))))
-        docs_slice  = json.load(open("processed_data/collected_docs/%s/slice_%d.json" % (reddit, n_slice)))
+        docs_slice  = json.load(open("processed_data/collected_docs/%s/slices/slice_%d.json" % (reddit, n_slice)))
         word_counts = json.load(open("pre_computed/%s_unigram_counts.json" % (reddit,)))
         qt_freqs    = dict(word_counts['question_title'])
         qt_sum      = sum(qt_freqs.values())
@@ -91,7 +92,11 @@ def main():
                 processed   += [make_example(qa_data[k], docs_list, word_freqs, n_sents, n_context)]
             if i % 10 == 0:
                 print(i, len(processed), time() - st_time)
-        json.dump(processed, open('processed_data/%s_selected_slice_%d_ns_%d_%d.json' % (reddit, n_slice, n_sents, n_context), 'w'))
+        if not isdir('processed_data/selected_%d_%d' % (n_sents, n_context)):
+            os.mkdir('processed_data/selected_%d_%d' % (n_sents, n_context))
+        if not isdir('processed_data/selected_%d_%d/%s' % (n_sents, n_context, reddit)):
+            os.mkdir('processed_data/selected_%d_%d/%s' % (n_sents, n_context, reddit))
+        json.dump(processed, open('processed_data/selected_%d_%d/%s/selected_slice_%d.json' % (n_sents, n_context, reddit, n_slice), 'w'))
 
 
 if __name__ == '__main__':

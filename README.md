@@ -10,7 +10,7 @@ We provide a suite of scripts to download paired questions and answers from the 
 
 ### FAQ: can you provide the processed data?
 
-No, we are not allowed to host processed Reddit or CommonCrawl data. While we are aware that it would make life a little easier, making your own version of the dataset following the instructions here if you have access to a SLURM cluster. We're also happy to work with you if your cluster works on another operating system. Unfortun the creation process involves downloading and filtering a full CommonCrawl dump, so it is unlikely to be manageable on a single machine.
+No, we are not allowed to host processed Reddit or CommonCrawl data. While we are aware that it would make life a little easier, making your own version of the dataset following the instructions here is pretty straightforward if you have access to a SLURM cluster. We're also happy to work with you if your cluster works on another operating system. Unfortunately the creation process involves downloading, filtering and tokenizing a full CommonCrawl dump, so it is unlikely to be manageable on a single machine.
 
 ## Downloading the Reddit Data
 
@@ -51,16 +51,14 @@ python merge_support_docs.py explainlikeimfive finalize
 
 ### FAQ: my SLURM cluster is not very stable and some of the threads are interrupted. Do I need to re-run everything?
 
-To check whether all slices are finished, simply look at the collocted\_docs/tmp/counts\_\*.json files. All the files corresponding to complete slices should only have the string *finished*, so for example:
+To check whether all slices are finished, simply look at the collected\_docs/tmp/counts\_\*.json files. All the files corresponding to completed slices should only have the string *finished*, so for example:
 ```
 ELI5/data_creation/processed_data$ grep 0 collected_docs/tmp/counts_*
 collected_docs/tmp/counts_18.json:13150
-collected_docs/tmp/counts_23.json:16800
-collected_docs/tmp/counts_36.json:26250
 collected_docs/tmp/counts_79.json:57100
 collected_docs/tmp/counts_90.json:64750
 ```
-tells you that threads 18, 23, 36, 79, and 90 is incomplete. Just rerun download\_support\_docs.py for these indices and the code will start again from the last downloaded chunk for that slice.
+tells you that threads 18, 79, and 90 are incomplete. Just rerun download\_support\_docs.py for these indices and the code will start again from the last downloaded chunk for that slice.
 
 ## Finalizing the dataset
 
