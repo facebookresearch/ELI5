@@ -115,6 +115,11 @@ python preprocess.py --source-lang qd_source_bpe --target-lang qd_target_bpe \
    --validpref $TEXT/valid --testpref $TEXT/test --trainpref $TEXT/train --destdir data-bin/eli5
 ```
 
+If you would like to binarize the dataset with our dictionary instead of creating your own (for example, if you would like to load our pretrained model), you can add the following parameters to the above command:
+```
+--srcdict model_code/dict.multitask_source_bpe.txt --tgtdict model_code/dict.multitask_target_bpe.txt
+```
+
 To train the model:
 ```
 cd fairseq
@@ -140,7 +145,7 @@ HYPOTHESES=model_hypotheses.txt
 REFERENCES=true_references.txt
 python compute_rouge.py --hypotheses $HYPOTHESES --references $REFERENCES
 ```
-The min and max length of generation were tuned. For partial fill ROUGE, we evaluated fixed length generation (as model generated answers are usually tuned to be a lot longer than human written answers) based on the validation set. 
+The min and max length of generation were tuned. For partial fill ROUGE, we evaluated fixed length generation (as model generated answers are usually tuned to be a lot longer than human written answers) based on the validation set.
 
 ## How to use the Multi-task Pretrained Model
 We provide a pretrained model, which you can download here:
