@@ -127,16 +127,16 @@ def masking_tokens(document):
     return source, target
 
 if __name__ == "__main__":
-	train_q, train_a, train_d = read_data(args.input + "/train_data.json")
+	train_q, train_a, train_d = read_data(args.input + "/explainlikeimfive_train.json")
 	form_source_target(train_q, train_d, train_a, args.output, "train")
-	valid_q, valid_a, valid_d = read_data(args.input + "/valid_data.json")
+	valid_q, valid_a, valid_d = read_data(args.input + "/explainlikeimfive_valid.json")
 	form_source_target(valid_q, valid_d, valid_a, args.output, "valid")
-	test_q, test_a, test_d = read_data(args.input + "/test_data.json")
+	test_q, test_a, test_d = read_data(args.input + "/explainlikeimfive_test.json")
 	form_source_target(test_q, test_d, test_a, args.output, "test")
 
-	train_q, train_a, train_d = read_data(args.input + "/train_data.json")
+	train_q, train_a, train_d = read_data(args.input + "/explainlikeimfive_train.json")
 	form_multitask_source_target(train_q, train_d, train_a, args.output, "train")
-	valid_q, valid_a, valid_d = read_data(args.input + "/valid_data.json")
+	valid_q, valid_a, valid_d = read_data(args.input + "/explainlikeimfive_valid.json")
 	form_multitask_source_target(valid_q, valid_d, valid_a, args.output, "valid", True)
-	test_q, test_a, test_d = read_data(args.input + "/test_data.json")
+	test_q, test_a, test_d = read_data(args.input + "/explainlikeimfive_test.json")
 	form_multitask_source_target(test_q, test_d, test_a, args.output, "test", True)
