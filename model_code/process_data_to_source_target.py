@@ -20,7 +20,7 @@ def read_data(json_input):
     questions = []
     answers = []
     supports = []
-    for d in data[1::2]:
+    for d in data:
         questions.append(d["question"].strip())
         answers.append(d["answer"].strip())
         supports.append(d["document"].strip())
