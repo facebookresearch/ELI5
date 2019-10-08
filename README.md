@@ -126,11 +126,13 @@ cd fairseq
 python train.py data-bin/eli5 --task translation --source-lang qd_source_bpe --target-lang qd_target_bpe --arch transformer_wmt_en_de_big_t2t --share-decoder-input-output-embed --dropout 1e-1 --attention-dropout 1e-1 --relu-dropout 1e-1 --criterion label_smoothed_cross_entropy --label-smoothing 1e-1 --optimizer adam --adam-betas '(0.9, 0.98)' --lr 1e-4 --lr-scheduler inverse_sqrt --warmup-updates 4000 --warmup-init-lr 1e-7 --min-lr 1e-9 --clip-norm 0 --no-progress-bar --log-interval 100
 ```
 
+Depending on the model you might need to increase the values for `--max-source-positions` and `--max-target-positions` (e.g., to 4096), and set `--max-tokens` and `--update-freq` to a suitable value.
+
 To generate from the model:
 ```
 cd fairseq
 PATH_TO_CHECKPOINT=model_checkpoint.pt
-python generate.py data-bin/eli5 --path $PATH_TO_CHECKPOINT --gen-subset valid --task translation --nbest 1 --source-lang qd_source_bpe --target-lang qd_target_bpe --beam 5 --batch-size 32 --remove-bpe --no-repeat-ngram-size 3 --max-len-b 500 --min-len 200
+python generate.py data-bin/eli5 --path $PATH_TO_CHECKPOINT --gen-subset valid --task translation --nbest 1 --source-lang qd_source_bpe --target-lang qd_target_bpe --beam 5 --batch-size 32 --remove-bpe --no-repeat-ngram-size 3 --max-len-b 500 --min-len 200 --max-source-positions 4096 --max-target-positions 4096 --skip-invalid-size-inputs-valid-test --model-overrides "{'max_source_positions':4096, 'max_target_positions':4096}"
 ```
 to evaluate on the test set, set:
 ```
