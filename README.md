@@ -2,6 +2,11 @@
 
 ![GitHub license](https://img.shields.io/badge/license-BSD-blue.svg)
 
+
+Read the Paper: https://arxiv.org/abs/1907.09190
+
+Read the Blog Post: https://ai.facebook.com/blog/longform-qa/
+
 --------------------------------------------------------------------------------
 
 # Data creation
