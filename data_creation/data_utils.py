@@ -42,9 +42,10 @@ html_pairs  = [
 tokenizer = English().Defaults.create_tokenizer()
 
 # tokenizes and removes URLs (kept in separate list)
-def pre_word_url_tokenize(st):
-    url_list = list(set(re.findall(URL_REGEX, st)))
-    stp = st.strip()
+def word_url_tokenize(st):
+    stp = ' '.join([w[:512] if w[:512].count('.') <= 12 else '.' for w in st.strip().split()])
+    url_list = list(set(re.findall(URL_REGEX, stp)))
+    # stp = st.strip()
     for i, url in enumerate(url_list):
         stp = stp.replace(url, " URL_%d " % (i,))
     for a, b in html_pairs:
@@ -54,7 +55,7 @@ def pre_word_url_tokenize(st):
 
 
 # wrap inside a timer to catch cases where SpaCy tokenizer hangs on too many dots
-def word_url_tokenize(st, max_len=8096, max_cont_len=512):
+def _word_url_tokenize(st, max_len=8096, max_cont_len=512):
     try:
         with time_limit(2):
             return pre_word_url_tokenize(st)

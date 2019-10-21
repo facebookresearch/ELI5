@@ -21,12 +21,12 @@ def main():
     for name in json.loads(args.subreddit_list):
         data_split  = json.load(open('pre_computed/%s_split_keys.json' % (name,)))
         qda_list    = []
-        for f_name in glob('processed_data/selected/slices/%s_selected_slice_*_ns_%d_%d.json' % (name, n_sel, n_cont)):
+        for f_name in glob('processed_data/selected_%d_%d/%s/selected_slice_*.json' % (n_sel, n_cont, name)):
             qda_list    += json.load(open(f_name))
         qda_dict    = dict([(dct['id'], dct) for dct in qda_list])
         for spl in ['train', 'valid', 'test']:
             split_list  = [qda_dict[k] for k in data_split[spl] if k in qda_dict]
-            json.dump(split_list, open('processed_data/selected/%s_%s.json' % (name, spl), 'w'))
+            json.dump(split_list, open('processed_data/selected_%d_%d/%s_%s.json' % (n_sel, n_cont, name, spl), 'w'))
 
 
 if __name__ == '__main__':
