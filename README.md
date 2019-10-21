@@ -7,7 +7,7 @@ Read the Paper: https://arxiv.org/abs/1907.09190
 
 Read the Blog Post: https://ai.facebook.com/blog/longform-qa/
 
-Explore the Dataset: https://facebookresearch.github.io/ELI5/
+Explore the Dataset: https://facebookresearch.github.io/ELI5/explore.html
 
 --------------------------------------------------------------------------------
 
