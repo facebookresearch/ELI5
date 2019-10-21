@@ -77,7 +77,7 @@ And finally, make the train, valid and test split with:
 ```
 cd ..
 python finalize_qda.py
-rm procesed_data/explainlikeimfive_selected_slice*
+rm processed_data/selected_15_1/explainlikeimfive/selected_slice_*.json
 ```
 
 Congrats, you can now start working on your very own Long-Form Question Answering systems!
