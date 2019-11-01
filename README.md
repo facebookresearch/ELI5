@@ -17,17 +17,17 @@ We provide a suite of scripts to download paired questions and answers from the 
 
 ### FAQ: can you provide the processed data?
 
-No, we are not allowed to host processed Reddit or CommonCrawl data. While we are aware that it would make life a little easier, making your own version of the dataset following the instructions here is pretty straightforward if you have access to a SLURM cluster. *We're also happy to work with you if your cluster works on another operating system, open an issue and we'll get on it!* Since the creation process involves downloading, filtering and tokenizing a full CommonCrawl dump however, using a single machine is impractical.
+No, we are not allowed to host processed Reddit or CommonCrawl data. While we are aware that it would make life a little easier, making your own version of the dataset following the instructions here is pretty straightforward if you have access to a SLURM cluster. **We're also happy to work with you if your cluster works on another operating system, open an issue and we'll get on it!** Since the creation process involves downloading, filtering and tokenizing a full CommonCrawl dump however, using a single machine is impractical.
 
 ## Overview of the data creation process
 
 The process consists of three steps. *Steps 1 and 2 should be run in parallel.*
 
-1. *Downloading and filtering the Reddit data.* This can be run on a single machine and may take up to 72 hours.
-2. *Downloading and tokenizing the CommonCrawl pages.* This part requires access to a cluster. We provide a sample SLURM script using 100 threads, which on our cluster finishes in under 48 hours.
-3. *Selecting passages from the downloaded pages to create the final support document.* After running steps 1 and 2, this part uses our TFIDF heuristic to create the final ~1000 words support document, and create a train/valid/test split of Question-Document-Answer triplets.
+1. **Downloading and filtering the Reddit data.** This can be run on a single machine and may take up to 72 hours.
+2. **Downloading and tokenizing the CommonCrawl pages.** This part requires access to a cluster. We provide a sample SLURM script using 100 threads, which on our cluster finishes in under 48 hours.
+3. **Selecting passages from the downloaded pages to create the final support document.** After running steps 1 and 2, this part uses our TFIDF heuristic to create the final ~1000 words support document, and create a train/valid/test split of Question-Document-Answer triplets.
 
-If you are having trouble with any of these, please open an issue stating which step is failing in the title, and attach the Python error text, if abailable.
+If you are having trouble with any of these, please open an issue stating which step is failing in the title, and attach the Python error text, if available.
 
 ## Downloading the Reddit Data
 
