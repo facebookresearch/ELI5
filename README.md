@@ -72,7 +72,10 @@ To check whether all slices are finished, simply look at the collected\_docs/tmp
 ```
 ELI5/data_creation/processed_data$ grep finished collected_docs/tmp/counts_* | wc
 ```
-tells you that threads 18, 79, and 90 are incomplete. Just rerun download\_support\_docs.py for these indices and the code will start again from the last downloaded chunk for that slice.
+If the number of finished thread is less than 100, simply relaunch the missing ones, the code will restart them from their last saved space. To launch a single thread (e.g. 34), go to the data\_creation folder and run:
+```
+python download_support_docs.py -ns 34
+```
 
 ## Finalizing the dataset
 
