@@ -152,6 +152,7 @@ def main():
             name, eli_k, num                        = ccid_path_tuple
             articles[name][reddit_id_group[eli_k]]  += [(eli_k, num, article)]
         f.close()
+        resp_c      = subprocess.run(['rm', fpath], stdout=subprocess.PIPE)
         print(">>>>>>>>>> ARTICLES FOUND %d in %.2f" % (ct, time() - start_time))
         if i % args.save_freq == args.save_freq - 1:
             for name, elik_maps in articles.items():

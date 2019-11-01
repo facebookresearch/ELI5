@@ -42,8 +42,7 @@ html_pairs  = [
 tokenizer = English().Defaults.create_tokenizer()
 
 # tokenizes and removes URLs (kept in separate list)
-def word_url_tokenize(st):
-    stp = ' '.join([w[:512] if w[:512].count('.') <= 12 else '.' for w in st.strip().split()])
+def pre_word_url_tokenize(stp):
     url_list = list(set(re.findall(URL_REGEX, stp)))
     # stp = st.strip()
     for i, url in enumerate(url_list):
@@ -55,17 +54,15 @@ def word_url_tokenize(st):
 
 
 # wrap inside a timer to catch cases where SpaCy tokenizer hangs on too many dots
-def _word_url_tokenize(st, max_len=8096, max_cont_len=512):
+def word_url_tokenize(st, max_len=20480, max_cont_len=512):
+    stp = ' '.join([w[:max_cont_len] if w[:max_cont_len].count('.') <= 12 else '.' for w in st.split()[:max_len]])
     try:
         with time_limit(2):
-            return pre_word_url_tokenize(st)
+            return pre_word_url_tokenize(stp)
     except TimeoutException as e:
-        # stp = ' '.join([w[:max_cont_len] for w in st[:max_len].split()])
-        stp = ' '.join([w[:max_cont_len] if w[:max_cont_len].count('.') <= 12 else '.' for w in st[:max_len].split()])
         print('timeout', len(st), ' --n-- '.join(st[:128].split('\n')))
         print(' --n-- '.join(stp.split('\n')))
-        res = pre_word_url_tokenize(stp)
-        print('finished', len(res[0]))
+        res = ('missed page', [])
         return res
 
 # split tokenized text into sentences, split sentences that are too long
