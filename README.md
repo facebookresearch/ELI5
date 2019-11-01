@@ -17,7 +17,17 @@ We provide a suite of scripts to download paired questions and answers from the 
 
 ### FAQ: can you provide the processed data?
 
-No, we are not allowed to host processed Reddit or CommonCrawl data. While we are aware that it would make life a little easier, making your own version of the dataset following the instructions here is pretty straightforward if you have access to a SLURM cluster. We're also happy to work with you if your cluster works on another operating system. Unfortunately the creation process involves downloading, filtering and tokenizing a full CommonCrawl dump, so it is unlikely to be manageable on a single machine.
+No, we are not allowed to host processed Reddit or CommonCrawl data. While we are aware that it would make life a little easier, making your own version of the dataset following the instructions here is pretty straightforward if you have access to a SLURM cluster. *We're also happy to work with you if your cluster works on another operating system, open an issue and we'll get on it!* Since the creation process involves downloading, filtering and tokenizing a full CommonCrawl dump however, using a single machine is impractical.
+
+## Overview of the data creation process
+
+The process consists of three steps. *Steps 1 and 2 should be run in parallel.*
+
+1. *Downloading and filtering the Reddit data.* This can be run on a single machine and may take up to 72 hours.
+2. *Downloading and tokenizing the CommonCrawl pages.* This part requires access to a cluster. We provide a sample SLURM script using 100 threads, which on our cluster finishes in under 48 hours.
+3. *Selecting passages from the downloaded pages to create the final support document.* After running steps 1 and 2, this part uses our TFIDF heuristic to create the final ~1000 words support document, and create a train/valid/test split of Question-Document-Answer triplets.
+
+If you are having trouble with any of these, please open an issue stating which step is failing in the title, and attach the Python error text, if abailable.
 
 ## Downloading the Reddit Data
 
@@ -29,7 +39,7 @@ python download_reddit_qalist.py -A
 ```
 The first line takes about 6 hours on one machine to download the questions, and the second less than 48 hours for the answers. Pushshift files are automatically removed after they've been processed, so space shouldn't be an issue there. The final product should be 689MB.
 
-## Downloading support documents
+## Downloading support documents from the CommonCrawl
 
 We provide a list of CommonCrawl IDs for supporting documents for each of the questions. This can be obtained at:
 ```
@@ -42,12 +52,12 @@ wget https://dl.fbaipublicfiles.com/eli5qa/explainlikeimfive_unigram_counts.json
 cd ..
 ```
 
-The next step than consists in reading through the CommonCrawl WET files to gather the text of pages which are used as support documents. In order to gather the 100 documents for each QA pair using a SLURM cluster and 100 threads, run:
+The next step than consists in reading through the CommonCrawl WET files to gather the text of pages which are used as support documents. In order to gather the documents for each QA pair (up to 100 per pair, sometimes less after deduplicating) using a SLURM cluster and 100 threads, run:
 ```
 cd slurm_scripts
 ./eli_download_docs_launcher.sh
 ```
-This should run in less than 24 hours. Be advised that the result is upwards of 100GB.
+This should run in less than 48 hours. Be advised that the result is upwards of 100GB.
 
 When you have downloaded the selected pages from all of the CommonCrawl slices, simply merge the slices from all the threads with:
 ```
@@ -60,10 +70,7 @@ python merge_support_docs.py explainlikeimfive finalize
 
 To check whether all slices are finished, simply look at the collected\_docs/tmp/counts\_\*.json files. All the files corresponding to completed slices should only have the string *finished*, so for example:
 ```
-ELI5/data_creation/processed_data$ grep 0 collected_docs/tmp/counts_*
-collected_docs/tmp/counts_18.json:13150
-collected_docs/tmp/counts_79.json:57100
-collected_docs/tmp/counts_90.json:64750
+ELI5/data_creation/processed_data$ grep finished collected_docs/tmp/counts_* | wc
 ```
 tells you that threads 18, 79, and 90 are incomplete. Just rerun download\_support\_docs.py for these indices and the code will start again from the last downloaded chunk for that slice.
 
