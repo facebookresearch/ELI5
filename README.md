@@ -108,8 +108,8 @@ We provide a script to convert the json formatted files to .txt files for source
 ```
 cd model_code
 OUTPUT_PATH=formatted_files
-PATH_TO_DATA=processed_data
-mkdir OUTPUT_PATH
+PATH_TO_DATA=processed_data/selected_15_1
+mkdir $OUTPUT_PATH
 python process_data_to_source_target.py --input $PATH_TO_DATA --output $OUTPUT_PATH
 ```
 
