@@ -5,16 +5,18 @@
 
 Read the Paper: https://arxiv.org/abs/1907.09190
 
-**UPDATE**: 
-
-ELI5 is now available in the Hugging Face **nlp** library. Check out this blog post, which provides a walkthrough of how to download the data as well as an updated extractive and generative approach to ELI5: https://yjernite.github.io/lfqa.html
-
-And check out the new demo: https://huggingface.co/qa/
-
-
 Read the Blog Post: https://ai.facebook.com/blog/longform-qa/
 
 Explore the Dataset: https://facebookresearch.github.io/ELI5/explore.html
+
+
+**UPDATES**: 
+
+- ELI5 is part of the **KILT Benchmark**. As part of KILT, we provide annotations for the dev and test sets grounded into a fixed Wikipedia snapshot. Check out the website: https://ai.facebook.com/tools/kilt and Github Repo: https://github.com/facebookresearch/KILT 
+
+- ELI5 is now available in the Hugging Face **nlp** library. Check out this blog post, which provides a walkthrough of how to download the data as well as an updated extractive and generative approach to ELI5: https://yjernite.github.io/lfqa.html. And check out the new demo: https://huggingface.co/qa/
+
+- ELI5 is part of **Dodecadialogue**, a benchmark of 12 dialogue tasks. Check out the website: https://parl.ai/projects/dodecadialogue/ 
 
 --------------------------------------------------------------------------------
 
